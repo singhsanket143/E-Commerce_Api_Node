@@ -11,4 +11,5 @@ E-commerce APi project in NodeJS
     - Run `npm install`
 
 - Run the Project
-    
+    - Run `node server.js`
+
