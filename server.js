@@ -8,11 +8,14 @@ const app = express(); // this function returns an express object which has the 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+app.set('views', './views');
+app.set('view engine', 'ejs');
+
 const PORT = process.env.PORT; // this will be the port on our local system where server will run
 
-let content = JSON.parse(fs.readFileSync('config/config.json', 'utf-8'));
-content.development.password = process.env.DB_PASS;
-fs.writeFileSync('config/config.json', JSON.stringify(content));
+app.get('/home', (req, res) => {
+    res.render('home');
+})
 
 
 app.listen(PORT, () => { // listen function registers the app for the port

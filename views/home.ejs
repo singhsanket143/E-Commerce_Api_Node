@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <style>
+       .categories {
+           padding-left: 20%;
+           padding-right: 20%;
+           padding-top: 5%;
+           display: flex;
+           flex-direction: row;
+           justify-content: space-between;
+       }
+       .category {
+           background-color: cornflowerblue;
+           padding: 30px;
+       }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar component extracted from bootstrap -->
+    <nav class="navbar bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand">Ecommerce</a>
+          <form class="d-flex" role="search">
+            <button class="btn btn-outline-success" type="submit">Cart</button>
+          </form>
+        </div>
+    </nav>
+      
+    <h1 class="text-center">Welcome to ecommerce</h1>
+
+    <div class="categories">
+        <div class="category">All products</div>
+        <div class="category">Electronics</div>
+        <div class="category">Fashion</div>
+        <div class="category">Mobiles</div>
+        <div class="category">Appliances</div>
+    </div>
+    <br>
+    <h4 class="text-center">Select a category</h4>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+</body>
+</html>
