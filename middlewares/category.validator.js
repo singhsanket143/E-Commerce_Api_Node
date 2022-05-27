@@ -22,8 +22,34 @@ const validateGetById = (req, res, next) => {
     next();
 }
 
+const validateUpdate = (req, res, next) => {
+    if(!req.body.name || !req.body.description) {
+        return res.status(400).json({
+            message: 'Invalid request params',
+            success: false,
+            err: 'Missing name or description',
+            data: {}
+        })
+    }
+    next();
+}
+
+const validatePartialUpdate = (req, res, next) => {
+    if(!(req.body.name || req.body.description)) {
+        return res.status(400).json({
+            message: 'Invalid request params',
+            success: false,
+            err: 'Missing name or description',
+            data: {}
+        })
+    }
+    next();
+}
+
 
 module.exports = {
     validateCreate,
-    validateGetById
+    validateGetById,
+    validateUpdate,
+    validatePartialUpdate
 }

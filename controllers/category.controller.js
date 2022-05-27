@@ -1,4 +1,5 @@
 const categoryService = require('../services/category.service');
+const _ = require('lodash');
 
 const serverError = {
     message: 'Something went wrong',
@@ -57,8 +58,26 @@ const getCategoryById = async (req, res) => {
     });
 }
 
+const updateCategory = async (req, res) => {
+    const response = await categoryService.update(req.body, req.params.id);
+    if(_.isEmpty(response) && !_.isUndefined(response)) {
+        serverError.message = 'Not able to find the category';
+        return res.status(400).json(serverError);
+    }
+    if(!response) {
+        return res.status(500).json(serverError);
+    }
+    return res.status(200).json({
+        message: 'Successfully updated the category',
+        success: true,
+        data: response,
+        err: {}
+    });
+}
+
 module.exports = {
     createCategory,
     getAllCategories,
-    getCategoryById
+    getCategoryById,
+    updateCategory
 }
