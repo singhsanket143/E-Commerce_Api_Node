@@ -1,7 +1,8 @@
 const express = require('express'); // Package to get the express object constructor
 const bodyParser = require('body-parser');
-const fs = require('fs');
 require('dotenv').config();
+
+const categoryRoutes = require('./routes/category.routes');
 
 const app = express(); // this function returns an express object which has the capabilitites to handle server side requests
 
@@ -10,6 +11,9 @@ app.use(bodyParser.json());
 
 app.set('views', './views');
 app.set('view engine', 'ejs');
+
+// Registering the routes
+categoryRoutes(app);
 
 const PORT = process.env.PORT; // this will be the port on our local system where server will run
 
