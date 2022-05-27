@@ -64,10 +64,21 @@ const update = async (data, categoryId) => {
     }
 }
 
+const destroy = async (categoryid) => {
+    try {
+        const category = await Category.findByPk(categoryid);
+        await category.destroy();
+        return true;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 module.exports = {
     create,
     getAll,
     getById,
     getByName,
-    update
+    update,
+    destroy
 }
