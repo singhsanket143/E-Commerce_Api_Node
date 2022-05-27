@@ -7,6 +7,17 @@ const routes = (app) => {
         categoryValidator.validateCreate,
         categoryController.createCategory
     );
+
+    app.get(
+        '/ecom/api/v1/category', 
+        categoryController.getAllCategories
+    );
+
+    app.get(
+        '/ecom/api/v1/category/:id',
+        categoryValidator.validateGetById,
+        categoryController.getCategoryById
+    )
 }
 
 module.exports = routes;

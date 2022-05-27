@@ -1,14 +1,16 @@
 const categoryService = require('../services/category.service');
 
+const serverError = {
+    message: 'Something went wrong',
+    success: false,
+    data: {},
+    err: 'Not able to do the operation on category'
+}
+
 const createCategory = async (req, res) => {
     const response = await categoryService.create(req.body);
     if(!response) {
-        return res.status(500).json({
-            message: 'Something went wrong, not able to create category',
-            success: false,
-            data: {},
-            err: 'Not able to create category'
-        });
+        return res.status(500).json(serverError);
     }
     return res.status(201).json({
         message: 'Successfully created the category',
@@ -18,6 +20,45 @@ const createCategory = async (req, res) => {
     });
 }
 
+const getAllCategories = async (req, res) => {
+    let response;
+    if(req.query.name) {
+        response = await categoryService.getByName(req.query.name);
+    } else {
+        response = await categoryService.getAll();
+    }
+    if(!response) {
+        return res.status(500).json({
+            message: 'Not able to find the categories',
+            success: false,
+            data: [],
+            err: 'Category not present'
+        });
+    }
+    return res.status(200).json({
+        message: 'Successfully fetched all the categories',
+        success: true,
+        data: response,
+        err: {}
+    })
+}
+
+
+const getCategoryById = async (req, res) => {
+    const response = await categoryService.getById(req.params.id);
+    if(!response) {
+        return res.status(500).json(serverError);
+    }
+    return res.status(200).json({
+        message: 'Successfully fetched the category',
+        success: true,
+        data: response,
+        err: {}
+    });
+}
+
 module.exports = {
-    createCategory
+    createCategory,
+    getAllCategories,
+    getCategoryById
 }
