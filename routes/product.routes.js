@@ -7,6 +7,11 @@ const routes = (app) => {
         productValidator.productCreateValidator,
         productController.createProduct
     )
+
+    app.get(
+        '/ecom/api/v1/products',
+        productController.getAllProducts
+    )
 }
 
 module.exports = routes;

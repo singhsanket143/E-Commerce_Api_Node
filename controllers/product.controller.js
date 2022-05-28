@@ -20,6 +20,24 @@ const createProduct = async (req, res) => {
     });
 }
 
+const getAllProducts = async (req, res) => {
+    let response;
+    if(!req.query.name)
+        response = await productService.getAll();
+    else
+        response = await productService.findByName(req.query.name);
+    if(!response) {
+        return res.status(500).json(serverError);
+    }
+    return res.status(200).json({
+        message: 'Successfully fetched the products',
+        success: true,
+        data: response,
+        err: {}
+    });
+}
+
 module.exports = {
-    createProduct
+    createProduct,
+    getAllProducts
 }
