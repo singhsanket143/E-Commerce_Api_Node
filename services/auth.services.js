@@ -1,9 +1,15 @@
-const {User} = require('../models/index');
+const {User, Role} = require('../models/index');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const signup = async (data) => {
     try {
         const user = await User.create(data);
+        const role = await Role.findOne({
+            where: {
+                name: 'CUSTOMER'
+            }
+        });
+        user.addRole(role);
         return user;
     } catch (err) {
         console.log(err.name, err.message);

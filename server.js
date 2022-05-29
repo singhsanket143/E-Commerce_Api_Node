@@ -5,6 +5,7 @@ require('dotenv').config();
 const categoryRoutes = require('./routes/category.routes');
 const productRoutes = require('./routes/product.routes');
 const authRoutes = require('./routes/auth.routes');
+const roleRoutes = require('./routes/role.routes');
 
 const dbSync = require('./config/db_sync');
 
@@ -20,6 +21,7 @@ app.set('view engine', 'ejs');
 categoryRoutes(app);
 productRoutes(app);
 authRoutes(app);
+roleRoutes(app);
 
 if(process.env.SYNC) {
     dbSync(true);

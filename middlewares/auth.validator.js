@@ -1,4 +1,5 @@
 const authService = require('../services/auth.services');
+const roleService = require('../services/role.service');
 
 const validateSignup = (req, res, next) => {
     if(!req.body.email || !req.body.password) {
@@ -56,8 +57,24 @@ const isAuthenticated = async (req, res, next) => {
     next();
 }
 
+const checkAdmin = async (req, res, next) => {
+    const user = await authService.getUserById(req.user);
+    const role = await roleService.getRole(1);
+    const isAdmin = await user.hasRole(role)
+    if(!isAdmin) {
+        return res.status(401).json({
+            message: 'User not an admin',
+            err: 'Not authorized',
+            data: {},
+            success: false
+        })
+    }
+    next();
+}
+
 module.exports = {
     validateSignup,
     validateSignin,
-    isAuthenticated
+    isAuthenticated,
+    checkAdmin
 }
