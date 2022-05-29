@@ -28,6 +28,38 @@ const signup = async (req, res) => {
     })
 }
 
+const signin = async (req, res) => {
+    const user = await authService.getUserByEmail(req.body.email);
+    if(!user) {
+        return res.status(404).json({
+            message: 'Email not found',
+            data: {},
+            success: false,
+            err: 'Invalid credentials'
+        })
+    }
+    if(!authService.checkPassword(req.body.password, user.password)) {
+        console.log("Incorrect password");
+        return res.status(400).json({
+            success: false,
+            data: {},
+            message: 'Incorrect password',
+            err: 'Invalid credentials'
+        })
+    }
+    const token = authService.createToken({id: user.id, email: user.email});
+    if(!token) {
+        return res.status(500).json(serverError);
+    }
+    return res.status(200).json({
+        message: 'Successfully logged in',
+        success: true,
+        data: token,
+        err: {}
+    })
+}
+
 module.exports = {
-    signup
+    signup,
+    signin
 }

@@ -6,6 +6,12 @@ const routes = (app) => {
         authValidator.validateSignup,
         authController.signup
     );
+
+    app.post(
+        '/ecom/api/v1/signin',
+        authValidator.validateSignin,
+        authController.signin
+    )
 }
 
 module.exports = routes;
