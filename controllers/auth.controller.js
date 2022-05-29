@@ -59,7 +59,21 @@ const signin = async (req, res) => {
     })
 }
 
+const updateUsername = async (req, res, next) => {
+    const response = authService.updateUsername(req.user, req.body.username);
+    if(!response) {
+        return res.status(500).json(serverError);
+    }
+    return res.status(200).json({
+        message: 'Successfully updated user',
+        data: response,
+        success: true,
+        err: {}
+    })
+}
+
 module.exports = {
     signup,
-    signin
+    signin,
+    updateUsername
 }

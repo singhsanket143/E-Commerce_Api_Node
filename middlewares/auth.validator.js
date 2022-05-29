@@ -103,11 +103,24 @@ const isAdminOrSeller = async (req, res, next) => {
     next();
 }
 
+const isSameUserLoggedIn = async (req, res, next) => {
+    if(req.user != req.body.userId) {
+        return res.status(401).json({
+            message: 'Cannot change username of other user',
+            err: 'Not authorized',
+            data: {},
+            success: false
+        })
+    }
+    next();
+}
+
 module.exports = {
     validateSignup,
     validateSignin,
     isAuthenticated,
     checkAdmin,
     checkSeller,
-    isAdminOrSeller
+    isAdminOrSeller,
+    isSameUserLoggedIn
 }

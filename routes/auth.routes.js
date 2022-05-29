@@ -12,6 +12,13 @@ const routes = (app) => {
         authValidator.validateSignin,
         authController.signin
     )
+
+    app.patch(
+        '/ecom/api/v1/user',
+        authValidator.isAuthenticated,
+        authValidator.isSameUserLoggedIn,
+        authController.updateUsername
+    )
 }
 
 module.exports = routes;

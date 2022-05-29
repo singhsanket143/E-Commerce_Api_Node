@@ -66,11 +66,23 @@ const createToken = (user) => {
     }
 }
 
+const updateUsername = async (id, name) => {
+    try {
+        const user = await User.findByPk(id);
+        user.username = name;
+        await user.save();
+        return user;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 module.exports = {
     signup,
     checkPassword,
     getUserByEmail,
     createToken,
     verifyToken,
-    getUserById
+    getUserById,
+    updateUsername
 }
