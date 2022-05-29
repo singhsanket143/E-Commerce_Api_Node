@@ -38,6 +38,7 @@ const routes = (app) => {
 
     app.get(
         '/ecom/api/v1/categories/:id/products',
+        categoryValidator.validatePaginator,
         categoryController.getproductsByCategory
     )
 }

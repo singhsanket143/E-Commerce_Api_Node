@@ -89,7 +89,7 @@ const deleteCategory = async (req, res) => {
 }
 
 const getproductsByCategory = async (req, res) => {
-    const response = await categoryService.getProducts(req.params.id);
+    const response = await categoryService.getProducts(req.params.id, req.query);
     if(!response) {
         return res.status(500).json(serverError);
     }

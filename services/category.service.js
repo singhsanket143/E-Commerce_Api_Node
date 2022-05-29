@@ -74,10 +74,15 @@ const destroy = async (categoryid) => {
     }
 }
 
-const getProducts = async (categoryId) => {
+const getProducts = async (categoryId, query) => {
     try {
         const category = await Category.findByPk(categoryId, {
-            include: Product
+            include: {
+                model: Product,
+                limit: parseInt(query.limit),
+                offset: parseInt(query.offset)
+            },
+            
         });
         return category;
     } catch (err) {

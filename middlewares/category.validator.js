@@ -46,10 +46,31 @@ const validatePartialUpdate = (req, res, next) => {
     next();
 }
 
+const validatePaginator = (req, res, next) => {
+    if(!(req.query.limit || req.query.offset)) {
+        next();   
+    }
+    const invalidQueryObject = {
+        message: 'Invalid query arguments',
+        success: false,
+        data: {},
+        err: 'limit or offset should be valid numbers'
+    }
+    console.log(req.query, Number.isNaN(parseInt(req.query.limit)));
+    if(req.query.limit && Number.isNaN(parseInt(req.query.limit))) {
+        return res.status(400).json(invalidQueryObject)
+    }
+    if(req.query.offset && Number.isNaN(parseInt(req.query.offset))) {
+        return res.status(400).json(invalidQueryObject)
+    }
+    next();
+    
+}
 
 module.exports = {
     validateCreate,
     validateGetById,
     validateUpdate,
-    validatePartialUpdate
+    validatePartialUpdate,
+    validatePaginator
 }
