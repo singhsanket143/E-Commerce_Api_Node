@@ -4,6 +4,7 @@ require('dotenv').config();
 
 const categoryRoutes = require('./routes/category.routes');
 const productRoutes = require('./routes/product.routes');
+const authRoutes = require('./routes/auth.routes');
 
 const dbSync = require('./config/db_sync');
 
@@ -18,6 +19,7 @@ app.set('view engine', 'ejs');
 // Registering the routes
 categoryRoutes(app);
 productRoutes(app);
+authRoutes(app);
 
 if(process.env.SYNC) {
     dbSync(true);
