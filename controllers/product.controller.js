@@ -22,12 +22,14 @@ const createProduct = async (req, res) => {
 
 const getAllProducts = async (req, res) => {
     let response;
-    if(!req.query.name)
-        response = await productService.getAll();
-    else
+    if(req.query.name)
         response = await productService.findByName(req.query.name);
+    else {
+        response = await productService.filteredProducts(req.query);
+    }
+    
     if(_.isEmpty(response) && !_.isUndefined(response)) {
-        serverError.err = 'No product found by the given name';
+        serverError.err = 'No product found';
         return res.status(404).json(serverError);
     }
     if(!response) {

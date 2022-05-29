@@ -89,7 +89,9 @@ const deleteCategory = async (req, res) => {
 }
 
 const getproductsByCategory = async (req, res) => {
+    console.log("inside controller")
     const response = await categoryService.getProducts(req.params.id, req.query);
+    // const response = await categoryService.getAll();
     if(!response) {
         return res.status(500).json(serverError);
     }
@@ -98,7 +100,7 @@ const getproductsByCategory = async (req, res) => {
         success: true,
         data: response,
         err: {}
-    });
+    })
 }
 
 module.exports = {

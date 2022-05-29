@@ -69,11 +69,58 @@ const destroy = async (productId) => {
     }
 }
 
+const createFilter = (data) => {
+    let filter = {};
+    if(data.minPrice && data.maxPrice) {
+        Object.assign(filter, {[Op.gte]: data.minPrice});
+        Object.assign(filter, {[Op.lte]: data.maxPrice});
+    } else if (data.minPrice) {
+        Object.assign(filter, {[Op.gte]: data.minPrice});
+    } else if (data.maxPrice) {
+        Object.assign(filter, {[Op.lte]: data.maxPrice});
+    }
+    return filter;
+}
+
+const filteredProducts = async (data) => {
+    let products;
+    if(!data.categoryId && !data.minPrice && !data.maxPrice) {
+        products = await Product.findAll();
+        return products;
+    }
+    let filter = createFilter(data);
+    if(!data.categoryId) {
+        products = await Product.findAll({
+            where: {
+                cost: filter
+            }
+        });
+        return products;
+    }
+    let costAndCategoryFilter;
+    if(data.minPrice || data.maxPrice) {
+        costAndCategoryFilter = {
+            cost: filter,
+            categoryId: data.categoryId
+        }
+    } else {
+        costAndCategoryFilter = {
+            categoryId: data.categoryId
+        }
+    }
+    console.log(costAndCategoryFilter)
+    products = await Product.findAll({
+        where: costAndCategoryFilter
+    });
+    return products
+}
+
 module.exports = {
     create,
     getAll,
     findByName,
     findById,
     update,
-    destroy
+    destroy,
+    filteredProducts
 }
