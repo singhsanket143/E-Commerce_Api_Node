@@ -23,18 +23,21 @@ const routes = (app) => {
 
     app.put(
         '/ecom/api/v1/categories/:id',
+        authValidator.isAuthenticated,
         categoryValidator.validateUpdate,
         categoryController.updateCategory
     )
 
     app.patch(
         '/ecom/api/v1/categories/:id',
+        authValidator.isAuthenticated,
         categoryValidator.validatePartialUpdate,
         categoryController.updateCategory
     )
 
     app.delete(
         '/ecom/api/v1/categories/:id',
+        authValidator.isAuthenticated,
         categoryController.deleteCategory
     )
 
