@@ -14,7 +14,7 @@ module.exports = {
 
     await queryInterface.bulkInsert('Categories', [
       {
-        name: 'Electronics',
+        name: 'Mobile',
         description: 'This category has electronic products',
         createdAt: new Date(),
         updatedAt: new Date()
