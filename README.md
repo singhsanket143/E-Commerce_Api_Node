@@ -11,6 +11,7 @@ E-commerce APi project in NodeJS
     - Run `npm install`
     - Create a new file `.env` and then configure the following environment variables
         - PORT=3000
+    - `npx sequelize init`
 
 - Run the Project
     - Run `node server.js`
@@ -27,3 +28,7 @@ E-commerce APi project in NodeJS
 - Every product must belong to a category
 - Every category must have many products
 - So between product and categories we have setup a 1:n (one to many) relation
+
+
+## Seeding data in the database
+```npx sequelize db:seed:all```
