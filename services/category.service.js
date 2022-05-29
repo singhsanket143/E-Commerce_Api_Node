@@ -1,4 +1,4 @@
-const {Category} = require('../models/index');
+const {Category, Product} = require('../models/index');
 
 const create = async (data) => {
     try {
@@ -74,11 +74,23 @@ const destroy = async (categoryid) => {
     }
 }
 
+const getProducts = async (categoryId) => {
+    try {
+        const category = await Category.findByPk(categoryId, {
+            include: Product
+        });
+        return category;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 module.exports = {
     create,
     getAll,
     getById,
     getByName,
     update,
-    destroy
+    destroy,
+    getProducts
 }

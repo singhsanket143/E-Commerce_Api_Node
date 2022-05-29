@@ -88,10 +88,24 @@ const deleteCategory = async (req, res) => {
     })
 }
 
+const getproductsByCategory = async (req, res) => {
+    const response = await categoryService.getProducts(req.params.id);
+    if(!response) {
+        return res.status(500).json(serverError);
+    }
+    return res.status(200).json({
+        message: 'Successfully fetched the products of the category',
+        success: true,
+        data: response,
+        err: {}
+    });
+}
+
 module.exports = {
     createCategory,
     getAllCategories,
     getCategoryById,
     updateCategory,
-    deleteCategory
+    deleteCategory,
+    getproductsByCategory
 }
