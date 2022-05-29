@@ -17,6 +17,23 @@ const routes = (app) => {
         '/ecom/api/v1/products/:id',
         productController.getProductById
     )
+
+    app.put(
+        '/ecom/api/v1/products/:id',
+        productValidator.productUpdateValidator,
+        productController.updateProduct
+    )
+
+    app.patch(
+        '/ecom/api/v1/products/:id',
+        productValidator.productPatchValidator,
+        productController.updateProduct
+    )
+
+    app.delete(
+        '/ecom/api/v1/products/:id',
+        productController.deleteProduct
+    )
 }
 
 module.exports = routes;

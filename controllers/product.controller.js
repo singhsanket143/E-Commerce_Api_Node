@@ -58,8 +58,41 @@ const getProductById = async (req, res) => {
     });
 }
 
+const updateProduct = async (req, res) => {
+    const response = await productService.update(req.body, req.params.id);
+    if(_.isEmpty(response) && !_.isUndefined(response)) {
+        serverError.err = 'No product found by the given id';
+        return res.status(404).json(serverError);
+    }
+    if(!response) {
+        return res.status(500).json(serverError);
+    }
+    return res.status(200).json({
+        message: 'Successfully updated the product',
+        success: true,
+        data: response,
+        err: {}
+    });
+
+}
+
+const deleteProduct = async (req, res) => {
+    const response = await productService.destroy(req.params.id);
+    if(!response) {
+        return res.status(500).json(serverError);
+    }
+    return res.status(200).json({
+        message: 'Successfully deleted the product',
+        sucess: true,
+        err: {},
+        data: {}
+    })
+}
+
 module.exports = {
     createProduct,
     getAllProducts,
-    getProductById
+    getProductById,
+    updateProduct,
+    deleteProduct
 }

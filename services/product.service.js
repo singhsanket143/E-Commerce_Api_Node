@@ -44,9 +44,35 @@ const findById = async (productId) => {
     }
 }
 
+const update = async (data, productId) => {
+    try {
+        const product = await Product.findByPk(productId);
+        if(!product) {
+            console.log("not able to find the product");
+            return {};
+        }
+        await product.update(data);
+        return product;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+const destroy = async (productId) => {
+    try {
+        const product = await Product.findByPk(productId);
+        await product.destroy();
+        return true;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 module.exports = {
     create,
     getAll,
     findByName,
-    findById
+    findById,
+    update,
+    destroy
 }
