@@ -12,6 +12,11 @@ const routes = (app) => {
         '/ecom/api/v1/products',
         productController.getAllProducts
     )
+
+    app.get(
+        '/ecom/api/v1/products/:id',
+        productController.getProductById
+    )
 }
 
 module.exports = routes;
