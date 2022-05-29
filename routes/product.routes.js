@@ -6,6 +6,7 @@ const routes = (app) => {
     app.post(
         '/ecom/api/v1/products',
         authValidator.isAuthenticated,
+        authValidator.isAdminOrSeller,
         productValidator.productCreateValidator,
         productController.createProduct
     )
@@ -23,6 +24,7 @@ const routes = (app) => {
     app.put(
         '/ecom/api/v1/products/:id',
         authValidator.isAuthenticated,
+        authValidator.isAdminOrSeller,
         productValidator.productUpdateValidator,
         productController.updateProduct
     )
@@ -30,6 +32,7 @@ const routes = (app) => {
     app.patch(
         '/ecom/api/v1/products/:id',
         authValidator.isAuthenticated,
+        authValidator.isAdminOrSeller,
         productValidator.productPatchValidator,
         productController.updateProduct
     )
@@ -37,6 +40,7 @@ const routes = (app) => {
     app.delete(
         '/ecom/api/v1/products/:id',
         authValidator.isAuthenticated,
+        authValidator.isAdminOrSeller,
         productController.deleteProduct
     )
 }

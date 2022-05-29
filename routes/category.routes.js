@@ -6,6 +6,7 @@ const routes = (app) => {
     app.post(
         '/ecom/api/v1/categories', 
         authValidator.isAuthenticated,
+        authValidator.checkAdmin,
         categoryValidator.validateCreate,
         categoryController.createCategory
     );
@@ -24,6 +25,7 @@ const routes = (app) => {
     app.put(
         '/ecom/api/v1/categories/:id',
         authValidator.isAuthenticated,
+        authValidator.checkAdmin,
         categoryValidator.validateUpdate,
         categoryController.updateCategory
     )
@@ -31,6 +33,7 @@ const routes = (app) => {
     app.patch(
         '/ecom/api/v1/categories/:id',
         authValidator.isAuthenticated,
+        authValidator.checkAdmin,
         categoryValidator.validatePartialUpdate,
         categoryController.updateCategory
     )
@@ -38,6 +41,7 @@ const routes = (app) => {
     app.delete(
         '/ecom/api/v1/categories/:id',
         authValidator.isAuthenticated,
+        authValidator.checkAdmin,
         categoryController.deleteCategory
     )
 

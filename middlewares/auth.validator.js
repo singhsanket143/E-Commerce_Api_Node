@@ -1,3 +1,4 @@
+const user = require('../models/user');
 const authService = require('../services/auth.services');
 const roleService = require('../services/role.service');
 
@@ -72,9 +73,41 @@ const checkAdmin = async (req, res, next) => {
     next();
 }
 
+const checkSeller = async (req, res, next) => {
+    const user = await authService.getUserById(req.user);
+    const role = await authService.getRole(2);
+    const isSeller = await user.hasRole(role);
+    if(!isSeller) {
+        return res.status(401).json({
+            message: 'User not a seller',
+            err: 'not authorized',
+            data: {},
+            success: false
+        })
+    }
+    next();
+}
+
+const isAdminOrSeller = async (req, res, next) => {
+    const user = await authService.getUserById(req.user);
+    const admin = await roleService.getRole(1);
+    const seller = await roleService.getRole(2);
+    if(!(user.hasRole(admin) || user.hasRole(seller))) {
+        return res.status(401).json({
+            message: 'Action only available to a valid admin or seller',
+            err: 'Not authorized',
+            data: {},
+            success: false
+        });
+    }
+    next();
+}
+
 module.exports = {
     validateSignup,
     validateSignin,
     isAuthenticated,
-    checkAdmin
+    checkAdmin,
+    checkSeller,
+    isAdminOrSeller
 }
