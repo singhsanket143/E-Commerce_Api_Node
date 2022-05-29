@@ -28,8 +28,26 @@ const getUserByEmail = async (userEmail) => {
     }
 }
 
+const getUserById = async (id) => {
+    try {
+        const user = await User.findByPk(id);
+        return user;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 const checkPassword = (userPassword, encryptedPassword) => {
     return bcrypt.compareSync(userPassword, encryptedPassword);
+}
+
+const verifyToken = (token) => {
+    try {
+        const response = jwt.verify(token, process.env.JWT_SECRET);
+        return response;
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 const createToken = (user) => {
@@ -46,5 +64,7 @@ module.exports = {
     signup,
     checkPassword,
     getUserByEmail,
-    createToken
+    createToken,
+    verifyToken,
+    getUserById
 }
