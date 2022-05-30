@@ -1,4 +1,5 @@
 const {Cart, Product, Cart_Products} = require('../models/index');
+const db = require('../models/index');
 const {STATUS} = require('../config/constants');
 
 const addProductToCart = async (data) => {
@@ -120,10 +121,30 @@ const updateStatus = async (cartId, cartStatus) => {
     }
 }
 
+const getPriceOfCart = async (cartId) => {
+    try {
+        const GET_TOTAL_PRICE_QUERY = `
+            SELECT SUM(CP.quantity*P.cost) as Total_Cost FROM 
+            Carts as C INNER JOIN Cart_PRODUCTS as CP 
+            ON C.id = CP.cartId
+            INNER JOIN Products as P 
+            ON P.id = CP.productId
+            WHERE C.id = ${cartId};
+        `;
+        console.log(GET_TOTAL_PRICE_QUERY);
+        const [result, metadata] = await db.sequelize.query(GET_TOTAL_PRICE_QUERY);
+        console.log(result);
+        return {result, metadata};
+    } catch (err) {
+
+    }
+}
+
 module.exports = {
     addProductToCart,
     getCartByUser,
     createCart,
     removeProductFromCart,
-    updateStatus
+    updateStatus,
+    getPriceOfCart
 }

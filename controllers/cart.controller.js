@@ -94,8 +94,22 @@ const updateOrderStatus = async (req, res) => {
     
 }
 
+const getTotalPrice = async (req, res) => {
+    const response = await cartService.getPriceOfCart(req.params.id);
+    if(!response) {
+        return res.status(500).json(serverError);
+    }
+    return res.status(200).json({
+        message: 'Successfully calculated the total cart cost',
+        err: {},
+        success: true,
+        data: response
+    })
+}
+
 module.exports = {
     addToCart,
     removeFromCart,
-    updateOrderStatus
+    updateOrderStatus,
+    getTotalPrice
 }
