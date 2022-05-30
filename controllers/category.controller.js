@@ -61,6 +61,7 @@ const getCategoryById = async (req, res) => {
 const updateCategory = async (req, res) => {
     const response = await categoryService.update(req.body, req.params.id);
     if(_.isEmpty(response) && !_.isUndefined(response)) {
+        console.log(_.isUndefined(response), _.isEmpty(response),response)
         serverError.message = 'Not able to find the category';
         return res.status(400).json(serverError);
     }
