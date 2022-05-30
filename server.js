@@ -6,8 +6,9 @@ const categoryRoutes = require('./routes/category.routes');
 const productRoutes = require('./routes/product.routes');
 const authRoutes = require('./routes/auth.routes');
 const roleRoutes = require('./routes/role.routes');
+const cartRoutes = require('./routes/cart.routes');
 
-const dbSync = require('./config/db_sync');
+const {dbSync, syncTable} = require('./config/db_sync');
 
 const app = express(); // this function returns an express object which has the capabilitites to handle server side requests
 
@@ -22,9 +23,19 @@ categoryRoutes(app);
 productRoutes(app);
 authRoutes(app);
 roleRoutes(app);
+cartRoutes(app);
 
 if(process.env.SYNC) {
-    dbSync(true);
+    // dbSync(true);
+    syncTable(false, true, require('./models/index').Cart)
+    .then(() => {
+        syncTable(false, true, require('./models/index').Product)
+        .then(() => {
+            syncTable(false, true, require('./models/index').Cart_Products);
+        })
+    })
+    
+
 }
 
 const PORT = process.env.PORT; // this will be the port on our local system where server will run
