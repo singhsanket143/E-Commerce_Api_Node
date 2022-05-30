@@ -107,9 +107,23 @@ const getTotalPrice = async (req, res) => {
     })
 }
 
+const getUserOrders = async (req, res) => {
+    const response = await cartService.getOrders(req.user);
+    if(!response) {
+        return res.status(500).json(serverError);
+    }
+    return res.status(200).json({
+        message: 'Successfully fetched all the order',
+        data: response,
+        success: true,
+        err: {}
+    })
+}
+
 module.exports = {
     addToCart,
     removeFromCart,
     updateOrderStatus,
-    getTotalPrice
+    getTotalPrice,
+    getUserOrders
 }

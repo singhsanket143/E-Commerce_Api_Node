@@ -26,6 +26,12 @@ const routes = (app) => {
         authValidator.isAuthenticated,
         cartController.getTotalPrice
     )
+
+    app.get(
+        '/ecom/api/v1/cart',
+        authValidator.isAuthenticated,
+        cartController.getUserOrders
+    )
 }
 
 module.exports = routes;
